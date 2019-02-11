@@ -7,7 +7,7 @@
 #______________________________________
 # Setting up Ruby and RubyGems with RVM
 
-- shell: '\curl -L https://get.rvm.io | bash > ruby_install.log'
+- shell: '\curl -L https://get.rvm.io | bash'
 
 - name: Add www-data to rvm group 
   user:
@@ -17,9 +17,22 @@
     append: yes
 
 - name: Install Ruby
-  shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version) >> ruby_install.log'
+  shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version)'
   args:
     chdir: /srv/seek
+    executable: /bin/bash
 
 #______________________________________
+# Installing Gems
 
+- name: Install bundler
+  shell: 'source /etc/profile.d/rvm.sh && gem install bundler'
+  args:
+    chdir: /srv/seek
+    executable: /bin/bash
+
+- name: Install ruby gems SEEK needs
+  shell: 'source /etc/profile.d/rvm.sh && bundle install'
+  args:
+    chdir: /srv/seek
+    executable: /bin/bash
