@@ -15,12 +15,12 @@
     name: mysql
     state: started
 
-- name: Remove the test database
-  mysql_db:
-    name: test
-    state: absent
+#- name: Remove the test database
+#  mysql_db:
+#    name: test
+#    state: absent
 
-- name: Create deploy user for mysql
+- name: Create seek user for mysql
   mysql_user:
     user: "{{ seek_user }}"
     host: "%"
