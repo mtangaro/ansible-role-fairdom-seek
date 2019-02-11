@@ -1,6 +1,6 @@
 ---
-debug:
-  msg: 'RAILS_ENV: $RAILS_ENV'
+- debug:
+    msg: 'RAILS_ENV: $RAILS_ENV'
 
 - name: Clone seek
   git:
