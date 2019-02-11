@@ -34,6 +34,7 @@
     - libffi-dev
     - libapr1-dev
     - libaprutil1-dev
+    - apache2
 
 - name: Stop apache
   service:
