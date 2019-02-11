@@ -18,6 +18,8 @@
 
 - name: Install rvm
   shell: '\curl -L https://get.rvm.io | bash'
+  become_user: root
+  become_method: sudo
 
 - name: Add www-data to rvm group 
   user:
