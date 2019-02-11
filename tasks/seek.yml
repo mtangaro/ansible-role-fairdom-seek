@@ -1,4 +1,13 @@
 ---
+- name: Create seek directory
+  file:
+    path: '/srv/seek'
+    state: directory
+    owner: 'www-data'
+    group: 'www-data'
+  become_user: root
+  become_method: sudo
+
 - name: Clone seek
   git:
     repo: 'https://github.com/seek4science/seek.git'
