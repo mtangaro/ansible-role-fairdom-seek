@@ -7,7 +7,8 @@
 #______________________________________
 # Setting up Ruby and RubyGems with RVM
 
-- shell: '\curl -L https://get.rvm.io | bash'
+- name: Install rvm
+  shell: '\curl -L https://get.rvm.io | bash'
 
 - name: Add www-data to rvm group 
   user:
@@ -40,6 +41,21 @@
 
 #______________________________________
 # Setting up the Database
+
+- name: Create seek user for mysql
+  mysql_user:
+    user: "{{ mysql_seek_user }}"
+    host: "%"
+    password: "{{ mysql_seek_password }}"
+    priv: "*.*:ALL,GRANT"
+
+- name: Setup db configuration file
+  template:
+    src: database.yml.j2
+    dest: /srv/seek/config/database.yml
+    remote_src: yes
+  args:
+    chdir: /srv/seek
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup'

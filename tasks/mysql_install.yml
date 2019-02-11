@@ -33,13 +33,6 @@
     name: test
     state: absent
 
-- name: Create seek user for mysql
-  mysql_user:
-    user: "{{ mysql_seek_user }}"
-    host: "%"
-    password: "{{ mysql_root_password }}"
-    priv: "*.*:ALL,GRANT"
-
 - name: Ensure anonymous users are not in the database
   mysql_user:
     user: ''
