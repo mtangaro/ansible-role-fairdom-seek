@@ -59,6 +59,8 @@
     host: "%"
     password: "{{ mysql_seek_password }}"
     priv: "*.*:ALL,GRANT"
+  become_user: root
+  become_method: sudo
 
 - name: Setup db configuration file
   template:
