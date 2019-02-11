@@ -2,7 +2,7 @@
 - name: Clone seek
   git:
     repo: 'https://github.com/seek4science/seek.git'
-    dest: '/srv/rails/seek'
+    dest: '{{ seek_install_path }}'
     version: 'v1.7.1'
 #______________________________________
 # Setting up Ruby and RubyGems with RVM
@@ -22,7 +22,7 @@
 - name: Install Ruby
   shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version)'
   args:
-    chdir: /srv/seek
+    chdir: '{{ seek_install_path }}'
     executable: /bin/bash
 
 #______________________________________
@@ -31,15 +31,14 @@
 - name: Install bundler
   shell: 'source /etc/profile.d/rvm.sh && gem install bundler'
   args:
-    chdir: /srv/seek
+    chdir: '{{ seek_install_path }}'
     executable: /bin/bash
 
 - name: Install ruby gems SEEK needs
   shell: 'source /etc/profile.d/rvm.sh && bundle install'
   args:
-    chdir: /srv/seek
+    chdir: '{{ seek_install_path }}'
     executable: /bin/bash
-
 
 #______________________________________
 # Setting up the Database
@@ -56,12 +55,12 @@
 - name: Setup db configuration file
   template:
     src: database.yml.j2
-    dest: /srv/seek/config/database.yml
+    dest: '{{ seek_install_path }}/config/database.yml'
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
   args:
-    chdir: /srv/seek
+    chdir: '{{ seek_install_path }}'
     executable: /bin/bash
 
 #______________________________________
@@ -70,5 +69,5 @@
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake assets:precompile'
   args:
-    chdir: /srv/seek
+    chdir: '{{ seek_install_path }}'
     executable: /bin/bash
