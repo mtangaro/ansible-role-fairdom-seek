@@ -4,5 +4,5 @@
 mysql_port: 3306
 mysql_root_password: "changeit"
 mysql_seek_user: "seekuser"
-mysql_seek_user: "changeit"
+mysql_seek_password: "changeit"
 #______________________________________
