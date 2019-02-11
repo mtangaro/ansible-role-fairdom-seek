@@ -66,7 +66,6 @@
   template:
     src: database.yml.j2
     dest: /srv/seek/config/database.yml
-    remote_src: yes
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
