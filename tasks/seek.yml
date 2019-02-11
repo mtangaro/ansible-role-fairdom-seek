@@ -3,8 +3,9 @@ debug:
   msg: 'RAILS_ENV: $RAILS_ENV'
 
 - name: Clone seek
-  git: 'https://github.com/seek4science/seek.git'
-  dest: '/srv/seek'
-  version: 'v1.7.1'
+  git:
+    repo: 'https://github.com/seek4science/seek.git'
+    dest: '/srv/seek'
+    version: 'v1.7.1'
 
 
