@@ -3,8 +3,12 @@
 
 - name: Install MySQL
   apt:
-    name: mysql-server
+    name: "{{ packages }}" 
     state: installed
+  vars:
+    packages:
+    - mysql-server
+    - python-pymysql
 
 - name: Start the MySQL service
   service:
