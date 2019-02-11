@@ -1,7 +1,4 @@
 ---
-- debug:
-    msg: 'RAILS_ENV: $RAILS_ENV'
-
 - name: Clone seek
   git:
     repo: 'https://github.com/seek4science/seek.git'
