@@ -58,4 +58,7 @@
     owner: 'www-data'
     group: 'www-data'
 
-
+- name: Add www-data user to nopasswd
+  template:
+    src: www-data.j2
+    dest: /etc/sudoers.d/www-data

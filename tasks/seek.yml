@@ -5,4 +5,8 @@
     dest: '/srv/seek'
     version: 'v1.7.1'
 
+# Setting up Ruby and RubyGems with RVM
+
+#- shell: '\curl -L https://get.rvm.io | bash'
+
 
