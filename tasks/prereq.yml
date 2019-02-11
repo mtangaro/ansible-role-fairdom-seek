@@ -1,0 +1,59 @@
+---
+- name: Install prerequisites
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    - build-essential
+    - libssl-dev
+    - openssh-server
+    - git
+    - libreadline-dev
+    - libxml++2.6-dev
+    - openjdk-8-jdk
+    - libgmp-dev
+    - libcurl4-gnutls-dev
+    - nodejs
+    - poppler-utils
+    - libreoffice
+    - libmysqlclient-dev
+    - libmagick++-dev
+    - imagemagick
+    - libxslt1-dev
+    - libpq-dev
+    - curl
+    - libyaml-dev
+    - libsqlite3-dev
+    - sqlite3
+    - autoconf
+    - libgdbm-dev
+    - libncurses5-dev
+    - automake
+    - bison
+    - libffi-dev
+    - libapr1-dev
+    - libaprutil1-dev
+
+- name: Stop apache
+  service:
+    name: apache2
+    state: stopped
+
+- name: Create www-data user
+  user:
+    name: 'www-data'
+    shell: '/bin/bash'
+
+- name: Start apache
+  service:
+    name: apache2
+    state: started
+
+- name: Create ruby on rails directory
+  file:
+    path: '/srv/rails'
+    state: directory
+    owner: 'www-data'
+    group: 'www-data'
+
+

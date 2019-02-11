@@ -1,2 +1,10 @@
 ---
 # tasks file for ansible-role-fairdom-seek
+
+include: prereq.yml
+
+include: mysql_install.yml
+
+include: seek.yml
+environment:
+  RAILS_ENV: production
