@@ -56,7 +56,16 @@
     remote_src: yes
 
 - name: Create the database for SEEK and seed it with the default data
-  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup'
+  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
+  args:
+    chdir: /srv/seek
+    executable: /bin/bash
+
+#______________________________________
+# Compiling Assets
+
+- name: Create the database for SEEK and seed it with the default data
+  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake assets:precompile'
   args:
     chdir: /srv/seek
     executable: /bin/bash

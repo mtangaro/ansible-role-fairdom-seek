@@ -35,6 +35,9 @@
     - libapr1-dev
     - libaprutil1-dev
     - apache2
+    - apache2-dev
+    - libapr1-dev
+    - libaprutil1-dev
 
 - name: Stop apache
   service:
