@@ -4,6 +4,20 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
+  username: {{ mysql_seek_user }}
+  password: {{ mysql_seek_password }}
+
+development:
+  <<: *default
+  database: seek_development
+  username: {{ mysql_seek_user }}
+  password: {{ mysql_seek_password }}
+
+test:
+  <<: *default
+  database: seek_test
+  username: {{ mysql_seek_user }}
+  password: {{ mysql_seek_password }}
 
 production:
   <<: *default
