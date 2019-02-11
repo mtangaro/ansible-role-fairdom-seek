@@ -36,3 +36,13 @@
   args:
     chdir: /srv/seek
     executable: /bin/bash
+
+
+#______________________________________
+# Setting up the Database
+
+- name: Create the database for SEEK and seed it with the default data
+  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup'
+  args:
+    chdir: /srv/seek
+    executable: /bin/bash
