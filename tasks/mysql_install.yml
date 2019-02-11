@@ -1,4 +1,4 @@
---
+---
 #https://gist.github.com/ihassin/8106956
 
 - name: Install MySQL
@@ -22,7 +22,7 @@
 
 - name: Create seek user for mysql
   mysql_user:
-    user: "{{ seek_user }}"
+    user: "{{ mysql_seek_user }}"
     host: "%"
     password: "{{ mysql_root_password }}"
     priv: "*.*:ALL,GRANT"
