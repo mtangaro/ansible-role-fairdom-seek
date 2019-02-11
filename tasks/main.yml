@@ -8,3 +8,5 @@
 - include: seek.yml
   environment:
     RAILS_ENV: production
+  become_user: www-data
+  become_method: sudo
