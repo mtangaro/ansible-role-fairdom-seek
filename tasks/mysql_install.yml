@@ -10,15 +10,28 @@
     - mysql-server
     - python-pymysql
 
+- name: Write root login credentials
+  copy:
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+    content: |
+        [client]
+        user=root
+        password={{ mysql_root_password }}
+        socket=/var/run/mysqld/mysqld.sock
+
 - name: Start the MySQL service
   service:
     name: mysql
     state: started
+    enabled: true
 
-#- name: Remove the test database
-#  mysql_db:
-#    name: test
-#    state: absent
+- name: Remove the test database
+  mysql_db:
+    name: test
+    state: absent
 
 - name: Create seek user for mysql
   mysql_user:
@@ -33,6 +46,7 @@
     host: "{{ item }}"
     state: absent
   with_items:
+    - "{{ ansible_hostname }}"
     - 127.0.0.1
     - ::1
     - localhost
@@ -50,6 +64,7 @@
     host: "{{ item }}"
     password: "{{ mysql_root_password }}"
   with_items:
+    - "{{ ansible_hostname }}"
     - 127.0.0.1
     - ::1
     - localhost
