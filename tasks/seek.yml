@@ -4,10 +4,10 @@
     repo: 'https://github.com/seek4science/seek.git'
     dest: '/srv/seek'
     version: 'v1.7.1'
-
+#______________________________________
 # Setting up Ruby and RubyGems with RVM
 
-- shell: '\curl -L https://get.rvm.io | bash'
+- shell: '\curl -L https://get.rvm.io | bash > ruby_install.log'
 
 - name: Add www-data to rvm group 
   user:
@@ -15,3 +15,11 @@
     shell: /bin/bash
     groups: rvm
     append: yes
+
+- name: Install Ruby
+  shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version) >> ruby_install.log'
+  args:
+    chdir: /srv/seek
+
+#______________________________________
+
