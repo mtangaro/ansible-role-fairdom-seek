@@ -4,6 +4,7 @@
     name: "{{ packages }}"
     state: present
   vars:
+    packages:
     - build-essential
     - libssl-dev
     - openssh-server
