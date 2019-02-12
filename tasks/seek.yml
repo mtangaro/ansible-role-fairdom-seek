@@ -132,10 +132,10 @@
   become_method: sudo
 
 - name: Enable seek site
-  command: '{ item }' 
+  command: '{{ item }}' 
   with_items:
-    - 'a2ensite seek'
-    - 'a2dissite 000-default'
+    - '/usr/sbin/a2ensite seek'
+    - '/usr/sbin/a2dissite 000-default'
   become_user: root
   become_method: sudo
 
