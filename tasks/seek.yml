@@ -65,7 +65,7 @@
   template:
     src: database.yml.j2
     dest: '{{ seek_install_path }}/config/database.yml'
-   when: dbstatus.rc == 0
+  when: dbstatus.rc == 0
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
