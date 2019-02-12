@@ -73,3 +73,58 @@
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
+
+#______________________________________
+#Serving SEEK through Apache
+
+- name: install passenger-install-apache2-module
+  shell: 'source /etc/profile.d/rvm.sh && passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
+  args:
+    creates: '/tmp/seek_passenger_install.log'
+
+- name: Chek passenger is installed
+  shell: cat /etc/apache2/apache2.conf
+  register: passenger_register
+
+- debug:
+    msg: 'Passenger module already added to /etc/apache2/apache2.conf'
+  when: passenger_register.stdout.find('mod_passenger.so') != -1
+
+- name: Add passenger to apache2 config file
+  shell: 'source /etc/profile.d/rvm.sh &&bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
+  when: passenger_register.stdout.find('mod_passenger.so') == -1
+  become_user: root
+  become_method: sudo
+
+- name: Create seek.conf in apache
+  template:
+    name: seek.conf.j2
+    dest: /etc/apache2/sites-available/seek.conf
+  become_user: root
+  become_method: sudo
+
+- name: Enable apache2 modules
+  apache2_module:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - headers
+    - headers
+  become_user: root
+  become_method: sudo
+
+- name: Enable seek site
+  command: '{ item }' 
+  with_items:
+    - 'a2ensite seek'
+    - 'a2dissite 000-default'
+  become_user: root
+  become_method: sudo
+
+- name: Restart apache2
+  service:
+    name: apache2
+    state: restarted
+  become_user: root
+  become_method: sudo
+

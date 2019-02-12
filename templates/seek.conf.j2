@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+  ServerName {{ ansible_default_ipv4.address }}
+  DocumentRoot /srv/rails/seek/public
+   <Directory /srv/rails/seek/public>
+      # This relaxes Apache security settings.
+      Allow from all
+      # MultiViews must be turned off.
+      Options -MultiViews
+      Require all granted
+   </Directory>
+   <LocationMatch "^/assets/.*$">
+      Header unset ETag
+      FileETag None
+      # RFC says only cache for 1 year
+      ExpiresActive On
+      ExpiresDefault "access plus 1 year"
+   </LocationMatch>
+</VirtualHost>
