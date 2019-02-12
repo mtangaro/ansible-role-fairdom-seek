@@ -19,7 +19,7 @@
     groups: rvm
     append: yes
   become_user: root
-  mecome_method: sudo
+  become_method: sudo
 
 - name: Install Ruby
   shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version)'
