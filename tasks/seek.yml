@@ -89,6 +89,8 @@
 - name: install passenger-install-apache2-module
   shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
   args:
+    chdir: '{{ seek_install_path }}'
+    executable: /bin/bash
     creates: '/tmp/seek_passenger_install.log'
 
 - name: Chek passenger is installed
@@ -101,6 +103,9 @@
 
 - name: Add passenger to apache2 config file
   shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
+  args:
+    chdir: '{{ seek_install_path }}'
+    executable: /bin/bash
   when: passenger_register.stdout.find('mod_passenger.so') == -1
   become_user: root
   become_method: sudo
