@@ -65,14 +65,14 @@
   template:
     src: database.yml.j2
     dest: '{{ seek_install_path }}/config/database.yml'
-  when: dbstatus.rc == 0
+  when: dbstatus.rc != 0
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
-  when: dbstatus.rc == 0
+  when: dbstatus.rc != 0
 
 #______________________________________
 # Compiling Assets
@@ -84,7 +84,7 @@
     executable: /bin/bash
 
 #______________________________________
-#Serving SEEK through Apache
+# Serving SEEK through Apache
 
 - name: install passenger-install-apache2-module
   shell: 'source /etc/profile.d/rvm.sh && passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
