@@ -88,7 +88,7 @@
 
 - stat:
     path: '/tmp/seek_passenger_install.log'
-    register: stat_result
+  register: stat_result
 
 - name: Install passenger-install-apache2-module
   shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
