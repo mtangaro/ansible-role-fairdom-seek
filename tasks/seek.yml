@@ -54,21 +54,30 @@
   become_user: root
   become_method: sudo
 
+- name: check if DB exists
+  shell: mysql -e 'SHOW DATABASES;' | grep seek_production
+  register: dbstatus
+  failed_when: dbstatus.rc == 2
+  become_user: root
+  become_method: sudo
+
 - name: Setup db configuration file
   template:
     src: database.yml.j2
     dest: '{{ seek_install_path }}/config/database.yml'
+   when: dbstatus.rc == 0
 
 - name: Create the database for SEEK and seed it with the default data
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
+  when: dbstatus.rc == 0
 
 #______________________________________
 # Compiling Assets
 
-- name: Create the database for SEEK and seed it with the default data
+- name: Compiling assets
   shell: 'source /etc/profile.d/rvm.sh && bundle exec rake assets:precompile'
   args:
     chdir: '{{ seek_install_path }}'
@@ -127,4 +136,3 @@
     state: restarted
   become_user: root
   become_method: sudo
-
