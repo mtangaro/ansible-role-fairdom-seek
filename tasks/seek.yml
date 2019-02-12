@@ -86,12 +86,16 @@
 #______________________________________
 # Serving SEEK through Apache
 
-- name: install passenger-install-apache2-module
+- stat:
+    path: '/tmp/seek_passenger_install.log'
+    register: stat_result
+
+- name: Install passenger-install-apache2-module
   shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
-    creates: '/tmp/seek_passenger_install.log'
+  when: stat_result.stat.exists == False 
 
 - name: Chek passenger is installed
   shell: cat /etc/apache2/apache2.conf
@@ -112,7 +116,7 @@
 
 - name: Create seek.conf in apache
   template:
-    name: seek.conf.j2
+    src: seek.conf.j2
     dest: /etc/apache2/sites-available/seek.conf
   become_user: root
   become_method: sudo
