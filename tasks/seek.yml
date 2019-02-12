@@ -87,7 +87,7 @@
 # Serving SEEK through Apache
 
 - name: install passenger-install-apache2-module
-  shell: 'source /etc/profile.d/rvm.sh && passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
+  shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
   args:
     creates: '/tmp/seek_passenger_install.log'
 
@@ -100,7 +100,7 @@
   when: passenger_register.stdout.find('mod_passenger.so') != -1
 
 - name: Add passenger to apache2 config file
-  shell: 'source /etc/profile.d/rvm.sh &&bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
+  shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
   when: passenger_register.stdout.find('mod_passenger.so') == -1
   become_user: root
   become_method: sudo
