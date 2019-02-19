@@ -127,7 +127,7 @@
     state: present
   with_items:
     - headers
-    - headers
+    - expires
   become_user: root
   become_method: sudo
 
