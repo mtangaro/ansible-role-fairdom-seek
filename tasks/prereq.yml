@@ -48,15 +48,7 @@
   user:
     name: 'www-data'
     shell: '/bin/bash'
-
-- name: "Create /home/www-data"
-  file:
-    path: '/home/www-data'
-    state: directory
-    owner: 'www-data'
-    group: 'www-data'
-  become_user: root
-  become_method: sudo
+    home: '/home/www-data'
 
 - name: Start apache
   service:
