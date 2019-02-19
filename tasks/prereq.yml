@@ -48,6 +48,7 @@
   user:
     name: 'www-data'
     shell: '/bin/bash'
+    createhome: yes
 
 - name: Start apache
   service:
