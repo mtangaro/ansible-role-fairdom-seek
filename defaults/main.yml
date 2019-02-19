@@ -2,6 +2,7 @@
 # defaults file for ansible-role-fairdom-seek
 
 seek_install_path: '/srv/rails/seek'
+seek_env_path: '/home/www-data/.rvm/scripts'
 
 mysql_port: 3306
 mysql_root_password: "changeit"

@@ -10,17 +10,17 @@
 - name: Install rvm
   shell: '\curl -L https://get.rvm.io | bash'
 
-- name: Add www-data to rvm group 
-  user:
-    name: www-data
-    shell: /bin/bash
-    groups: rvm
-    append: yes
-  become_user: root
-  become_method: sudo
+#- name: Add www-data to rvm group 
+#  user:
+#    name: www-data
+#    shell: /bin/bash
+#    groups: rvm
+#    append: yes
+#  become_user: root
+#  become_method: sudo
 
 - name: Install Ruby
-  shell: 'source /etc/profile.d/rvm.sh && /usr/local/rvm/bin/rvm install $(cat .ruby-version)'
+  shell: 'source {{ seek_env_path }} && /usr/local/rvm/bin/rvm install $(cat .ruby-version)'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
@@ -29,13 +29,13 @@
 # Installing Gems
 
 - name: Install bundler
-  shell: 'source /etc/profile.d/rvm.sh && gem install bundler'
+  shell: 'source {{ seek_env_path }} && gem install bundler'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
 
 - name: Install ruby gems SEEK needs
-  shell: 'source /etc/profile.d/rvm.sh && bundle install'
+  shell: 'source {{ seek_env_path }} && bundle install'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
@@ -66,7 +66,7 @@
   when: dbstatus.rc != 0
 
 - name: Create the database for SEEK and seed it with the default data
-  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake db:setup > /tmp/seek_db_craete.log'
+  shell: 'source {{ seek_env_path }} && bundle exec rake db:setup > /tmp/seek_db_craete.log'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
@@ -76,7 +76,7 @@
 # Compiling Assets
 
 - name: Compiling assets
-  shell: 'source /etc/profile.d/rvm.sh && bundle exec rake assets:precompile'
+  shell: 'source {{ seek_env_path }} && bundle exec rake assets:precompile'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
@@ -89,7 +89,7 @@
   register: stat_result
 
 - name: Install passenger-install-apache2-module
-  shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
+  shell: 'source {{ seek_env_path }} && bundle exec passenger-install-apache2-module --auto > /tmp/seek_passenger_install.log'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
@@ -104,7 +104,7 @@
   when: passenger_register.stdout.find('mod_passenger.so') != -1
 
 - name: Add passenger to apache2 config file
-  shell: 'source /etc/profile.d/rvm.sh && bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
+  shell: 'source {{ seek_env_path }} && bundle exec passenger-install-apache2-module --snippet >> /etc/apache2/apache2.conf'
   args:
     chdir: '{{ seek_install_path }}'
     executable: /bin/bash
