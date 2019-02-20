@@ -10,15 +10,6 @@
 - name: Install rvm
   shell: '\curl -L https://get.rvm.io | bash'
 
-#- name: Add www-data to rvm group 
-#  user:
-#    name: www-data
-#    shell: /bin/bash
-#    groups: rvm
-#    append: yes
-#  become_user: root
-#  become_method: sudo
-
 - name: Install Ruby
   shell: 'source {{ rvm_env_script }} && {{ rvm_bin }} install $(cat .ruby-version)'
   args:
@@ -141,5 +132,20 @@
   service:
     name: apache2
     state: restarted
+  become_user: root
+  become_method: sudo
+
+#______________________________________
+# Starting the SEEK services
+
+- name: Copy scripts
+  copy:
+    src: '{{ item }}'
+    dest: '{{ /etc/init.d/ }}'
+    mode: a+x
+  with_items:
+    - delayed_job-seek
+    - soffice
+    - solr-seek
   become_user: root
   become_method: sudo
