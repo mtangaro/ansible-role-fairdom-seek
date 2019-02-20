@@ -38,6 +38,7 @@
     - apache2-dev
     - libapr1-dev
     - libaprutil1-dev
+    - python-mysqldb
 
 - name: Stop apache
   service:
