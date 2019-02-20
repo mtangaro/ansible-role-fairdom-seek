@@ -2,13 +2,20 @@
 # defaults file for ansible-role-fairdom-seek
 
 seek_install_path: '/srv/rails/seek'
+
+#______________________________________
 rvm_env_path: '/home/www-data/.rvm/scripts'
 rvm_env_script: '{{ rvm_env_path }}/rvm'
 rvm_bin: '/home/www-data/.rvm/bin/rvm'
 
+#______________________________________
 mysql_port: 3306
 mysql_root_password: "changeit"
 mysql_seek_user: "seekuser"
 mysql_seek_password: "changeit"
 
 #______________________________________
+virtuoso_dba_password_default: "dba"
+virtuoso_dba_password: "changeit"
+virtuoso_dav_password_default: "dav"
+virtuoso_dav_password: "changeit"

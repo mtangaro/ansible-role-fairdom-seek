@@ -10,3 +10,5 @@
     RAILS_ENV: production
   become_user: www-data
   become: true
+
+- include: virtuoso.yml

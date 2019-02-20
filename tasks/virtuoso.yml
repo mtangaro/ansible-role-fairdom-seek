@@ -1,0 +1,40 @@
+---
+- name: Install virtuoso
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - virtuoso-opensource
+
+- name: Enable virtuoso init file
+  replace:
+    path: /etc/default/virtuoso-opensource-6.1
+    regexp: "RUN=no"
+    replace: "RUN=yes"
+
+- name: Start virtuoso
+  service:
+    name: virtuoso-opensource-6.1
+    state: started
+    enabled: yes
+
+- name: Change virtuoso dba password
+  shell: "echo \"user_set_password('dba', '{{ virtuoso_dba_password }}');\" | isql-vt 1111 dba {{ virtuoso_dba_password_default }}"
+  args:
+    creates: '/tmp/virtuoso_password_change.log'
+    register: virtuoso_password_change_register
+
+- shell: "echo '{{ virtuoso_password_change_register.stdout }}' > /tmp/virtuoso_password_change.log"
+  args:
+    creates: '/tmp/virtuoso_password_change.log'
+
+- name: Change virtuoso dav password
+  shell: "echo \"user_set_password('dav', '{{ virtuoso_dav_password }}');\" | isql-vt 1111 dav {{ virtuoso_dav_password_default }}"
+  args:
+    creates: '/tmp/virtuoso_dav_password_change.log'
+    register: virtuoso_dav_password_change_register
+
+- shell: "echo '{{ virtuoso_dav_password_change_register.stdout }}' > /tmp/virtuoso_dav_password_change.log"
+  args:
+    creates: '/tmp/virtuoso_dav_password_change.log'
