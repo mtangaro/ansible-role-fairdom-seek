@@ -141,7 +141,7 @@
 - name: Copy scripts
   copy:
     src: '{{ item }}'
-    dest: '{{ /etc/init.d/ }}'
+    dest: '/etc/init.d'
     mode: a+x
   with_items:
     - delayed_job-seek
@@ -149,3 +149,8 @@
     - solr-seek
   become_user: root
   become_method: sudo
+
+
+
+
+
