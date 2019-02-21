@@ -41,6 +41,8 @@
   args:
     creates: '/tmp/virtuoso_dav_password_change.log'
 
-- shell: "echo 'grant execute on SPARQL_DELETE_DICT_CONTENT to \"SPARQL\";' | isql-vt 1111  dba {{ virtuoso_dba_password_default }}"
+- name: "Set additional privileges for deleting triples (1)"
+  shell: "echo 'grant execute on SPARQL_DELETE_DICT_CONTENT to \"SPARQL\";' | isql-vt 1111  dba {{ virtuoso_dba_password }}"
 
-- shell: "echo 'grant execute on SPARQL_DELETE_DICT_CONTENT to SPARQL_UPDATE;' | isql-vt 1111 dba {{ virtuoso_dba_password_default }}"
+- name: "set additional privileges for deleting triples (2)"
+  shell: "echo 'grant execute on SPARQL_DELETE_DICT_CONTENT to SPARQL_UPDATE;' | isql-vt 1111 dba {{ virtuoso_dba_password }}"
