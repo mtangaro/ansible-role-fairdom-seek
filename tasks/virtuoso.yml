@@ -9,7 +9,7 @@
 
 - name: Enable virtuoso init file
   replace:
-    path: /etc/default/virtuoso-opensource-6.1
+    dest: /etc/default/virtuoso-opensource-6.1
     regexp: "RUN=no"
     replace: "RUN=yes"
 
