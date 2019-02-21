@@ -151,7 +151,7 @@
   become_method: sudo
 
 - name: Enable init scripts
-  command: '/usr/sbin/update-rc.d {{ item }} defaults'
+  command: ' /usr/sbin/update-rc.d {{ item }} defaults'
   with_items:
     - delayed_job-seek
     - soffice
