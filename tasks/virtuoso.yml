@@ -22,12 +22,12 @@
 - name: Change virtuoso dba password
   shell: "echo \"user_set_password('dba', '{{ virtuoso_dba_password }}');\" | isql-vt 1111 dba {{ virtuoso_dba_password_default }}"
   args:
-    creates: '/tmp/virtuoso_password_change.log'
+    creates: '/tmp/virtuoso_dba_password_change.log'
   register: virtuoso_password_change_register
 
-- shell: "echo '{{ virtuoso_password_change_register.stdout }}' > /tmp/virtuoso_password_change.log"
+- shell: "echo '{{ virtuoso_password_change_register.stdout }}' > /tmp/virtuoso_dba_password_change.log"
   args:
-    creates: '/tmp/virtuoso_password_change.log'
+    creates: '/tmp/virtuoso_dba_password_change.log'
 
 # Soruce from:
 # https://www.apt-browse.org/browse/ubuntu/trusty/universe/i386/virtuoso-opensource-6.1/6.1.6+repack-0ubuntu3/debian/postinst
