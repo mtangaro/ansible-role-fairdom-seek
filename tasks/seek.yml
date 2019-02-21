@@ -138,11 +138,20 @@
 #______________________________________
 # Starting the SEEK services
 
-- name: Copy scripts
+- name: Copy init scripts
   copy:
     src: '{{ item }}'
     dest: '/etc/init.d'
     mode: a+x
+  with_items:
+    - delayed_job-seek
+    - soffice
+    - solr-seek
+  become_user: root
+  become_method: sudo
+
+- name: Enable init scripts
+  command: '/usr/sbin/update-rc.d {{ item }} defaults'
   with_items:
     - delayed_job-seek
     - soffice
