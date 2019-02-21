@@ -29,8 +29,10 @@
   args:
     creates: '/tmp/virtuoso_password_change.log'
 
+# Soruce from:
+# https://www.apt-browse.org/browse/ubuntu/trusty/universe/i386/virtuoso-opensource-6.1/6.1.6+repack-0ubuntu3/debian/postinst
 - name: Change virtuoso dav password
-  shell: "update WS.WS.SYS_DAV_USER set U_PASSWORD='{{ virtuoso_dav_password }}' where U_NAME='dav' | isql-vt 1111 dav {{ virtuoso_dav_password_default }}"
+  shell: "echo \"UPDATE SYS_USERS SET U_PASSWORD='{{ virtuoso_dav_password }}' WHERE U_NAME='dav';\" | isql-vt 1111 dav {{ virtuoso_dba_password }}"
   args:
     creates: '/tmp/virtuoso_dav_password_change.log'
   register: virtuoso_dav_password_change_register
