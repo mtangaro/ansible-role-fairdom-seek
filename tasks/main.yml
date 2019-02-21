@@ -12,3 +12,5 @@
   become: true
 
 - include: virtuoso.yml
+  environment:
+    RAILS_ENV: production

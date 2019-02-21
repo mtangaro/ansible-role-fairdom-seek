@@ -1,0 +1,9 @@
+production:
+  uri: http://localhost:8890/sparql
+  update_uri: http://localhost:8890/sparql-auth
+
+  username: dba
+  password: {{ virtuoso_dba_password }}
+
+  private_graph: seek:private
+  public_graph: seek:public

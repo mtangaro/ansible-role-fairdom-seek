@@ -46,3 +46,14 @@
 
 - name: "set additional privileges for deleting triples (2)"
   shell: "echo 'grant execute on SPARQL_DELETE_DICT_CONTENT to SPARQL_UPDATE;' | isql-vt 1111 dba {{ virtuoso_dba_password }}"
+
+- name: Setup seek virtuoso config file
+  template:
+    src: virtuoso_settings.yml.j2
+    dest: '{{ seek_install_path }}/config/virtuoso_settings.yml'
+
+- name: Start generating and sending triples
+  shell: 'source {{ rvm_env_script }} && bundle exec rake seek_rdf:generate RAILS_ENV=production'
+  args:
+    chdir: '{{ seek_install_path }}'
+    executable: /bin/bash
