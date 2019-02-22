@@ -18,6 +18,8 @@
     name: virtuoso-opensource-6.1
     state: started
     enabled: yes
+  become_user: root
+  become_method: sudo
 
 - name: Change virtuoso dba password
   shell: "echo \"user_set_password('dba', '{{ virtuoso_dba_password }}');\" | isql-vt 1111 dba {{ virtuoso_dba_password_default }}"
