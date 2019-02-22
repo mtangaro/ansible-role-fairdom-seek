@@ -13,10 +13,10 @@
     regexp: "RUN=no"
     replace: "RUN=yes"
 
-- name: Start virtuoso
+- name: Restart virtuoso to enalble init changes
   service:
     name: virtuoso-opensource-6.1
-    state: started
+    state: restarted
     enabled: yes
   become_user: root
   become_method: sudo
